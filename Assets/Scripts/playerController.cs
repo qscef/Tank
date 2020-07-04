@@ -11,6 +11,7 @@ public class playerController : MonoBehaviour
     public float maxSpeed;
     public float friction;
     public float speedRotation;
+    public animatorPlayer animatorPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -18,63 +19,82 @@ public class playerController : MonoBehaviour
         speedMoving = 0;
     }
 
-    void FixedUpdate()
+    // можно было использовать Input.GetAxis("Vertical"), но решил попробовать отслеживать прото нажатия
+    void FixedUpdate() 
     {
         // gas control
-        if (Input.GetKey(KeyCode.W)) {
+        if (Input.GetKey(KeyCode.W))
+        {
             direction.x = 1;
         }
-        else if (Input.GetKey(KeyCode.S)) {
+        else if (Input.GetKey(KeyCode.S))
+        {
             direction.x = -1;
         }
-        else {
+        else
+        {
             direction.x = 0;
         }
 
         if (direction.x != 0)
         {
             // speed limiter
-            if ((speedMoving > -maxSpeed) && (speedMoving < maxSpeed)) {
-                speedMoving = speedMoving + (direction.x * accelerationSpeed);
+            if (Mathf.Abs(speedMoving) < maxSpeed)
+            {
+                speedMoving += (direction.x * accelerationSpeed);
             }
         }
         // friction force
-        else if (speedMoving > 0) {
-            if (speedMoving - friction < friction) {
+        else if (speedMoving > 0)
+        {
+            if (speedMoving - friction < friction)
+            {
                 speedMoving = 0;
             }
-            else {
-                speedMoving = speedMoving - friction;
+            else
+            {
+                speedMoving -= friction;
             }
         }
-        else if (speedMoving < 0) {
-            if (speedMoving + friction > friction) {
+        else if (speedMoving < 0)
+        {
+            if (speedMoving + friction > friction)
+            {
                 speedMoving = 0;
             }
-            else {
-                speedMoving = speedMoving + friction;
+            else
+            {
+                speedMoving += friction;
             }
         }
-        Debug.Log(speedMoving);
         transform.Translate(0, 0, speedMoving);
 
         // rotation
-        if (Input.GetKey(KeyCode.A)) {
+        if (Input.GetKey(KeyCode.A))
+        {
             direction.y = -1;
         }
-        else if (Input.GetKey(KeyCode.D)) {
+        else if (Input.GetKey(KeyCode.D))
+        {
             direction.y = 1;
         }
-        else {
+        else
+        {
             direction.y = 0;
         }
         // for reverse control
-        if (speedMoving < 0) {
+        if (speedMoving < 0)
+        {
             transform.Rotate(0, speedRotation * -direction.y, 0);
         }
-        else {
+        else
+        {
             transform.Rotate(0, speedRotation * direction.y, 0);
         }
+
+        //animation
+        animatorPlayer.movingAnimation(speedMoving, direction.y);
+
     }
 
     // Update is called once per frame
