@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     private Vector2 direction;
     private float speedMoving;
@@ -11,12 +11,16 @@ public class playerController : MonoBehaviour
     public float maxSpeed;
     public float friction;
     public float speedRotation;
-    public animatorPlayer animatorPlayer;
 
-    // Start is called before the first frame update
+    public AnimatorPlayer AnimatorPlayer;
+    public GUIController GUI;
+    public BarrelController BarrelController;
+
     void Start()
     {
         speedMoving = 0;
+        GUI.horizontalAngle += changeBarrelAngleHorizontal;
+        GUI.verticalAngle += changeBarrelAngleVertical;
     }
 
     // можно было использовать Input.GetAxis("Vertical"), но решил попробовать отслеживать прото нажатия
@@ -93,13 +97,17 @@ public class playerController : MonoBehaviour
         }
 
         //animation
-        animatorPlayer.movingAnimation(speedMoving, direction.y);
+        AnimatorPlayer.movingAnimation(speedMoving, direction.y);
 
     }
 
-    // Update is called once per frame
-    void Update()
+    void changeBarrelAngleHorizontal(float horizontalAngle)
     {
+        BarrelController.rotateHorizontalBerral(horizontalAngle);
+    }
 
+    void changeBarrelAngleVertical(float verticalAngle)
+    {
+        BarrelController.rotateVerticalBerral(verticalAngle);
     }
 }

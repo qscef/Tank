@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class animatorPlayer : MonoBehaviour
+public class AnimatorPlayer : MonoBehaviour
 {
-    public moveWheel moveWheel;
+    public MoveWheels MoveWheels;
 
     public void movingAnimation(float speedMoving, float directionRotation)
     {
         if (speedMoving != 0)
         {
-            moveWheel.movement(speedMoving);
+            MoveWheels.movement(speedMoving);
         }
         else if (directionRotation != 0)
         {
-            moveWheel.rotating(directionRotation);
+            MoveWheels.rotating(directionRotation);
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class moveWheel : MonoBehaviour
+public class MoveWheels : MonoBehaviour
 {
     public GameObject[] wheelRightSide;
     public GameObject[] wheelLeftSide;
@@ -12,7 +12,6 @@ public class moveWheel : MonoBehaviour
 
     public void movement(float speedMoving)
     {
-        //умжножение на 15 так как размер поля и танка маленькие получились
         foreach (GameObject wheel in wheelLeftSide)
         {
             wheel.transform.Rotate(0, transform.rotation.x - speedMoving * speedCoef, 0);
@@ -26,11 +25,8 @@ public class moveWheel : MonoBehaviour
 
     public void rotating(float directionRotation)
     {
-        Debug.Log(directionRotation);
-
         if (directionRotation > 0)
         {
-            //умжножение на 5 так как размер поля и танка маленькие получились
             foreach (GameObject wheel in wheelLeftSide)
             {
                 wheel.transform.Rotate(0, transform.rotation.x - directionRotation * speedRotation, 0);
@@ -44,5 +40,4 @@ public class moveWheel : MonoBehaviour
             };
         }
     }
-
 }
