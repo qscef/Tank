@@ -13,6 +13,7 @@ public class GUIController : MonoBehaviour
 
     public Action<float> horizontalAngle;
     public Action<float> verticalAngle;
+    public Action shot;
 
     void changeHorizontal(float angle)
     {
@@ -24,9 +25,14 @@ public class GUIController : MonoBehaviour
         verticalAngle?.Invoke(angle);
     }
 
+    void sendShotMessage() {
+        shot?.Invoke();
+    }
+
     void Start()
     {
         sliderHorizontal.onValueChanged.AddListener(changeHorizontal);
-        sliderVertical.onValueChanged.AddListener(changeVertical); 
+        sliderVertical.onValueChanged.AddListener(changeVertical);
+        buttonFire.onClick.AddListener(sendShotMessage);
     }
 }

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
         speedMoving = 0;
         GUI.horizontalAngle += changeBarrelAngleHorizontal;
         GUI.verticalAngle += changeBarrelAngleVertical;
+        GUI.shot += shotBarrel;
     }
 
     // можно было использовать Input.GetAxis("Vertical"), но решил попробовать отслеживать прото нажатия
@@ -103,11 +104,19 @@ public class PlayerController : MonoBehaviour
 
     void changeBarrelAngleHorizontal(float horizontalAngle)
     {
-        BarrelController.rotateHorizontalBerral(horizontalAngle);
+        BarrelController.rotateHorizontalBarrel(horizontalAngle);
     }
 
     void changeBarrelAngleVertical(float verticalAngle)
     {
-        BarrelController.rotateVerticalBerral(verticalAngle);
+        BarrelController.rotateVerticalBarrel(verticalAngle);
+    }
+
+    void shotBarrel()
+    {
+        if (speedMoving == 0)
+        {
+            BarrelController.shot();
+        }
     }
 }

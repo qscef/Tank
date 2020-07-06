@@ -5,38 +5,41 @@ using UnityEngine;
 public class BarrelController : MonoBehaviour
 {
     public GameObject Barrel;
+    public GameObject BarrelPointShot;
+    public Transform BarrelPointShotForward;
+    public GameObject Bullet;
 
-    private float rotateZ;
     private Vector2 offsetAngle;
+    private const float timeLifeBullet = 5f;
+    private const int forceBullet = 50;
+    private const int turningForce = 10;
 
-    void Start()
-    {
-    }
-
-    public void rotateHorizontalBerral(float rotateHorizontal)
+    public void rotateHorizontalBarrel(float rotateHorizontal)
     {
         offsetAngle.x = rotateHorizontal;
-        rotateBerral();
+        rotateBarrel();
     }
         
-    public void rotateVerticalBerral(float rotateVertical)
+    public void rotateVerticalBarrel(float rotateVertical)
     {
         offsetAngle.y = rotateVertical;
-        rotateBerral();
+        rotateBarrel();
     }
 
-    private void rotateBerral()
+    private void rotateBarrel()
     {
         Barrel.transform.localRotation = Quaternion.identity; 
-        Barrel.transform.Rotate(offsetAngle.y * 10, offsetAngle.x * 10, 0);
+        Barrel.transform.Rotate(offsetAngle.y * turningForce, offsetAngle.x * turningForce, 0);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void shot()
     {
-        if (Input.GetKey(KeyCode.F))
-        {
-            //shot
-        }
+        var bullet = Instantiate(Bullet);
+        bullet.transform.position = BarrelPointShot.transform.position;
+        var rbBullet = bullet.GetComponent<Rigidbody>();
+        bullet.transform.LookAt(BarrelPointShotForward);
+        rbBullet.AddForce(bullet.transform.forward * forceBullet, ForceMode.VelocityChange);
+
+        Destroy(bullet, timeLifeBullet);
     }
 }
