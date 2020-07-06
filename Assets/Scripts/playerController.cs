@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // можно было использовать Input.GetAxis("Vertical"), но решил попробовать отслеживать прото нажатия
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         // gas control
         if (Input.GetKey(KeyCode.W))
@@ -100,6 +100,15 @@ public class PlayerController : MonoBehaviour
         //animation
         AnimatorPlayer.movingAnimation(speedMoving, direction.y);
 
+        // hide line trajectory shot
+        if ((speedMoving != 0) || (direction.y != 0))
+        {
+            BarrelController.hideLineTreajectoryShot();
+        }
+        else
+        {
+            BarrelController.showTrajectory();
+        }
     }
 
     void changeBarrelAngleHorizontal(float horizontalAngle)
